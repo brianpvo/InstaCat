@@ -11,13 +11,16 @@
 
 @interface ViewController ()
 
+@property (nonatomic) NSMutableArray <CatImage *> *catImageArray;
+
 @end
 
 @implementation ViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view, typically from a nib.
+    
+    self.catImageArray = [[NSMutableArray alloc] init];
     [self URLRequest];
 }
 
@@ -35,10 +38,6 @@
             NSLog(@"error: %@", error.localizedDescription);
             return;
         }
-//        [[NSOperationQueue mainQueue] addOperationWithBlock:^{
-//            // This will run on the main queue
-//
-//        }];
         
         [self processDataToJSON:data];
         
@@ -86,9 +85,9 @@
         
         NSLog(@"url %@", url);
         
+        CatImage *catImage = [[CatImage alloc] initWithTitleAndURL:title URL:url];
+        [self.catImageArray addObject:catImage];
     }
-
-    NSLog(@"photo array %@", [photoArray objectAtIndex:0]);
 }
 
 
