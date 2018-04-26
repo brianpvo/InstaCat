@@ -8,10 +8,12 @@
 
 #import "ViewController.h"
 #import "CatImage.h"
+#import "CatImageCell.h"
 
-@interface ViewController ()
+@interface ViewController () <UICollectionViewDataSource>
 
 @property (nonatomic) NSMutableArray <CatImage *> *catImageArray;
+@property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 
 @end
 
@@ -88,6 +90,26 @@
         CatImage *catImage = [[CatImage alloc] initWithTitleAndURL:title URL:url];
         [self.catImageArray addObject:catImage];
     }
+}
+
+-(NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
+    return 1;
+}
+
+- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
+    return [self.catImageArray count];
+}
+
+-(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
+    CatImageCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"catImageCellId" forIndexPath:indexPath];
+    
+    CatImage *catImage = [self.catImageArray objectAtIndex:indexPath.row];
+    
+    cell.imageView.image = [UIImage imageWithData:[NSData dataWithContentsOfURL:catImage.url]];
+    cell.titleLabel.text = catImage.title;
+    
+    return cell;
+    
 }
 
 
