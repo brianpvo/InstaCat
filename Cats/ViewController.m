@@ -7,6 +7,7 @@
 //
 
 #import "ViewController.h"
+#import "CatImage.h"
 
 @interface ViewController ()
 
@@ -74,6 +75,7 @@
         NSString *serverId = photoInfo[@"server"];
         NSString *photoId = photoInfo[@"id"];
         NSString *secret = photoInfo[@"secret"];
+        NSString *title = photoInfo[@"title"];
         
         NSString *url = [NSString stringWithFormat:
                          @"https://farm%@.staticflickr.com/%@/%@_%@.jpg",
