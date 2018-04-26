@@ -90,7 +90,6 @@
         
         CatImage *catImage = [[CatImage alloc] initWithTitleAndURL:title URL:url];
         [self.catImageArray addObject:catImage];
-        NSLog(@"%@", self.catImageArray);
     }
     
 }
@@ -109,7 +108,7 @@
     
     CatImage *catImage = [self.catImageArray objectAtIndex:indexPath.row];
     
-    cell.imageView.image = [UIImage imageWithData:[NSData dataWithContentsOfURL:catImage.url]];
+    cell.imageView.image = [catImage downloadImageFromURL];
     cell.titleLabel.text = catImage.title;
     
     return cell;

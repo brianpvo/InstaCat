@@ -20,4 +20,12 @@
     return self;
 }
 
+-(UIImage *)downloadImageFromURL {
+    if (self.image == nil) {
+        self.image = [UIImage imageWithData:[NSData dataWithContentsOfURL:self.url]];
+    }
+    
+    return self.image;
+}
+
 @end

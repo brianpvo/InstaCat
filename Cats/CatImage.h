@@ -7,12 +7,16 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "UIKit/UIKit.h"
 
 @interface CatImage : NSObject
 
 @property (nonatomic) NSString *title;
 @property (nonatomic) NSURL *url;
+@property (nonatomic) UIImage *image;
 
 - (instancetype)initWithTitleAndURL:(NSString *)title URL:(NSString *)url;
+
+-(UIImage *)downloadImageFromURL;
 
 @end
