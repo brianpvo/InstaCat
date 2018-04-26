@@ -64,6 +64,7 @@
         
         [[NSOperationQueue mainQueue] addOperationWithBlock:^{
             [self processResponseDictionary:jsonDict];
+            [self.collectionView reloadData];
         }];
     }
 }
@@ -85,11 +86,13 @@
                          photoId,
                          secret];
         
-        NSLog(@"url %@", url);
+//        NSLog(@"url %@", url);
         
         CatImage *catImage = [[CatImage alloc] initWithTitleAndURL:title URL:url];
         [self.catImageArray addObject:catImage];
+        NSLog(@"%@", self.catImageArray);
     }
+    
 }
 
 -(NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
@@ -101,7 +104,8 @@
 }
 
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    CatImageCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"catImageCellId" forIndexPath:indexPath];
+    
+    CatImageCell *cell = [self.collectionView dequeueReusableCellWithReuseIdentifier:@"catImageCellId" forIndexPath:indexPath];
     
     CatImage *catImage = [self.catImageArray objectAtIndex:indexPath.row];
     
