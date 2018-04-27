@@ -12,10 +12,12 @@
 @interface CatImage : NSObject
 
 @property (nonatomic) NSString *title;
+@property (nonatomic) NSString *photoId;
 @property (nonatomic) NSURL *url;
 @property (nonatomic) UIImage *image;
+@property (nonatomic) NSURL *flickrURL;
 
-- (instancetype)initWithTitleAndURL:(NSString *)title URL:(NSString *)url;
+- (instancetype)initWithTitleAndURL:(NSString *)title URL:(NSString *)url photoId:(NSString *)photoId;
 
 -(UIImage *)downloadImageFromURL;
 

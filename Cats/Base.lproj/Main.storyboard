@@ -92,16 +92,10 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
-                    <navigationItem key="navigationItem" id="Aeu-2d-xhn">
-                        <barButtonItem key="rightBarButtonItem" title="Safari" image="safari-button" id="I5S-1R-YaZ">
-                            <inset key="imageInsets" minX="0.0" minY="0.0" maxX="-110" maxY="0.0"/>
-                            <connections>
-                                <segue destination="MHT-rb-fBJ" kind="show" identifier="safariButtonId" id="s48-W4-VBq"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" id="Aeu-2d-xhn"/>
                     <connections>
                         <outlet property="collectionView" destination="PJH-0A-hAA" id="Eex-ci-RGY"/>
+                        <segue destination="MHT-rb-fBJ" kind="show" identifier="safariButtonId" id="PtY-ow-b4Z"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -118,10 +112,20 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="sZ0-tH-LSw"/>
                     </view>
+                    <toolbarItems/>
+                    <navigationItem key="navigationItem" id="yFL-vd-qXf">
+                        <barButtonItem key="rightBarButtonItem" title="Safari" image="safari-button" id="I5S-1R-YaZ">
+                            <inset key="imageInsets" minX="0.0" minY="0.0" maxX="-110" maxY="0.0"/>
+                            <connections>
+                                <action selector="safariButton:" destination="MHT-rb-fBJ" id="s0i-l2-FQL"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="TWT-Zc-HeE" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="956" y="109"/>
+            <point key="canvasLocation" x="956" y="108.39580209895054"/>
         </scene>
     </scenes>
     <resources>

@@ -27,6 +27,11 @@
     [self URLRequest:@"https://api.flickr.com/services/rest/?method=flickr.photos.search&format=json&nojsoncallback=1&api_key=53fbe5403f875ec142bd4cff9e44215a&tags=cat" completion:^(NSDictionary *jsonDict){
         [self processResponseDictionary:jsonDict];
         [self.collectionView reloadData];
+        for (CatImage *catImage in self.catImageArray) {
+            [self URLRequest:[NSString stringWithFormat:@"https://api.flickr.com/services/rest/?method=flickr.photos.getInfo&format=json&nojsoncallback=1&api_key=53fbe5403f875ec142bd4cff9e44215a&photo_id=%@", catImage.photoId] completion:^(NSDictionary *dict) {
+                NSLog(@"url dict: %@", dict);
+            }];
+        }
     }];
 }
 
@@ -45,8 +50,6 @@
             return;
         }
         
-        //[self processDataToJSON:data];
-//        NSError *error = nil;
         id json = [NSJSONSerialization JSONObjectWithData:data
                                                   options:0
                                                     error:&error];
@@ -60,8 +63,6 @@
             NSDictionary *jsonDict = (NSDictionary *)json;
             
             [[NSOperationQueue mainQueue] addOperationWithBlock:^{
-//                [self processResponseDictionary:jsonDict];
-//                [self.collectionView reloadData];
                 completion(jsonDict);
             }];
         }
@@ -90,7 +91,7 @@
         
 //        NSLog(@"url %@", url);
         
-        CatImage *catImage = [[CatImage alloc] initWithTitleAndURL:title URL:url];
+        CatImage *catImage = [[CatImage alloc] initWithTitleAndURL:title URL:url photoId:photoId];
         [self.catImageArray addObject:catImage];
     }
     
@@ -119,19 +120,19 @@
 
 
 
-//- (void)collectionView:(UICollectionView *)collectionView didHighlightItemAtIndexPath:(NSIndexPath *)indexPath
-//{
-//    CatImageCell *cell = [self.collectionView dequeueReusableCellWithReuseIdentifier:@"catImageCellId" forIndexPath:indexPath];
-//
-//    CatImage *catImage = [self.catImageArray objectAtIndex:indexPath.row];
-//    //[self performSegueWithIdentifier:@"safariButtonId" sender:catImage.url];
-//
-//}
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    //CatImageCell *cell = [self.collectionView dequeueReusableCellWithReuseIdentifier:@"catImageCellId" forIndexPath:indexPath];
 
-//-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-//    SafariViewController *sVC = [segue destinationViewController];
-//    sVC.url = sender;
-//}
+    [self performSegueWithIdentifier:@"safariButtonId" sender:indexPath];
+
+}
+
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(NSIndexPath *)sender {
+    SafariViewController *sVC = [segue destinationViewController];
+    CatImage *catImage = [self.catImageArray objectAtIndex:sender.row];
+    sVC.image = [catImage downloadImageFromURL];
+}
 
 
 - (void)didReceiveMemoryWarning {

@@ -10,6 +10,7 @@
 
 @interface SafariViewController : UIViewController
 
+@property (nonatomic) UIImage *image;
 @property (nonatomic) NSURL *url;
 
 @end
