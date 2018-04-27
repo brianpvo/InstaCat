@@ -34,7 +34,6 @@
     
 }
 - (IBAction)safariButton:(id)sender {
-    self.url = [NSURL URLWithString:@"https:\/\/www.flickr.com\/photos\/145831940@N02\/39914823610\/"];
     SFSafariViewController *sVC = [[SFSafariViewController alloc] initWithURL:self.url];
     sVC.delegate = self;
     

@@ -27,12 +27,17 @@
     [self URLRequest:@"https://api.flickr.com/services/rest/?method=flickr.photos.search&format=json&nojsoncallback=1&api_key=53fbe5403f875ec142bd4cff9e44215a&tags=cat" completion:^(NSDictionary *jsonDict){
         [self processResponseDictionary:jsonDict];
         [self.collectionView reloadData];
-        for (CatImage *catImage in self.catImageArray) {
-            [self URLRequest:[NSString stringWithFormat:@"https://api.flickr.com/services/rest/?method=flickr.photos.getInfo&format=json&nojsoncallback=1&api_key=53fbe5403f875ec142bd4cff9e44215a&photo_id=%@", catImage.photoId] completion:^(NSDictionary *dict) {
-                NSLog(@"url dict: %@", dict);
-            }];
-        }
+        [self processSafariUrl];
     }];
+}
+
+-(void)processSafariUrl {
+    for (CatImage *catImage in self.catImageArray) {
+        [self URLRequest:[NSString stringWithFormat:@"https://api.flickr.com/services/rest/?method=flickr.photos.getInfo&format=json&nojsoncallback=1&api_key=53fbe5403f875ec142bd4cff9e44215a&photo_id=%@", catImage.photoId] completion:^(NSDictionary *dict) {
+            NSString* urlString = dict[@"photo"][@"urls"][@"url"][0][@"_content"];
+            catImage.flickrURL = [NSURL URLWithString: urlString];
+        }];
+    }
 }
 
 -(void)URLRequest:(NSString *)html completion:(void (^)(NSDictionary *dict))completion {
@@ -132,6 +137,7 @@
     SafariViewController *sVC = [segue destinationViewController];
     CatImage *catImage = [self.catImageArray objectAtIndex:sender.row];
     sVC.image = [catImage downloadImageFromURL];
+    sVC.url = catImage.flickrURL;
 }
 
 
