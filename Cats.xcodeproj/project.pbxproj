@@ -17,6 +17,7 @@
 		7A8C9C182092583F0029FCA0 /* CatsUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A8C9C172092583F0029FCA0 /* CatsUITests.m */; };
 		7A8C9C2720926A690029FCA0 /* CatImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A8C9C2620926A690029FCA0 /* CatImage.m */; };
 		7A8C9C2A209270180029FCA0 /* CatImageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A8C9C29209270180029FCA0 /* CatImageCell.m */; };
+		7A8C9C2D20927F500029FCA0 /* SafariViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A8C9C2C20927F500029FCA0 /* SafariViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -57,6 +58,8 @@
 		7A8C9C2620926A690029FCA0 /* CatImage.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CatImage.m; sourceTree = "<group>"; };
 		7A8C9C28209270180029FCA0 /* CatImageCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CatImageCell.h; sourceTree = "<group>"; };
 		7A8C9C29209270180029FCA0 /* CatImageCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CatImageCell.m; sourceTree = "<group>"; };
+		7A8C9C2B20927F500029FCA0 /* SafariViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SafariViewController.h; sourceTree = "<group>"; };
+		7A8C9C2C20927F500029FCA0 /* SafariViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SafariViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -120,6 +123,8 @@
 				7A8C9BFE2092583F0029FCA0 /* LaunchScreen.storyboard */,
 				7A8C9C012092583F0029FCA0 /* Info.plist */,
 				7A8C9C022092583F0029FCA0 /* main.m */,
+				7A8C9C2B20927F500029FCA0 /* SafariViewController.h */,
+				7A8C9C2C20927F500029FCA0 /* SafariViewController.m */,
 			);
 			path = Cats;
 			sourceTree = "<group>";
@@ -272,6 +277,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7A8C9C2D20927F500029FCA0 /* SafariViewController.m in Sources */,
 				7A8C9C2720926A690029FCA0 /* CatImage.m in Sources */,
 				7A8C9BF82092583E0029FCA0 /* ViewController.m in Sources */,
 				7A8C9C032092583F0029FCA0 /* main.m in Sources */,

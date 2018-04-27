@@ -9,8 +9,9 @@
 #import "ViewController.h"
 #import "CatImage.h"
 #import "CatImageCell.h"
+#import "SafariViewController.h"
 
-@interface ViewController () <UICollectionViewDataSource>
+@interface ViewController () <UICollectionViewDataSource, UICollectionViewDelegate>
 
 @property (nonatomic) NSMutableArray <CatImage *> *catImageArray;
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
@@ -23,11 +24,14 @@
     [super viewDidLoad];
     
     self.catImageArray = [[NSMutableArray alloc] init];
-    [self URLRequest];
+    [self URLRequest:@"https://api.flickr.com/services/rest/?method=flickr.photos.search&format=json&nojsoncallback=1&api_key=53fbe5403f875ec142bd4cff9e44215a&tags=cat" completion:^(NSDictionary *jsonDict){
+        [self processResponseDictionary:jsonDict];
+        [self.collectionView reloadData];
+    }];
 }
 
--(void)URLRequest {
-    NSURL *url = [NSURL URLWithString:@"https://api.flickr.com/services/rest/?method=flickr.photos.search&format=json&nojsoncallback=1&api_key=53fbe5403f875ec142bd4cff9e44215a&tags=cat"]; // 1
+-(void)URLRequest:(NSString *)html completion:(void (^)(NSDictionary *dict))completion {
+    NSURL *url = [NSURL URLWithString:html]; // 1
     NSURLRequest *urlRequest = [[NSURLRequest alloc] initWithURL:url]; // 2
     
     NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration]; // 3
@@ -41,32 +45,30 @@
             return;
         }
         
-        [self processDataToJSON:data];
+        //[self processDataToJSON:data];
+//        NSError *error = nil;
+        id json = [NSJSONSerialization JSONObjectWithData:data
+                                                  options:0
+                                                    error:&error];
+        if (error) { // 1
+            // Handle the error
+            NSLog(@"error: %@", error.localizedDescription);
+            return;
+        }
+        
+        if ([json isKindOfClass:[NSDictionary class]]) {
+            NSDictionary *jsonDict = (NSDictionary *)json;
+            
+            [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+//                [self processResponseDictionary:jsonDict];
+//                [self.collectionView reloadData];
+                completion(jsonDict);
+            }];
+        }
         
     }]; // 5
     
     [dataTask resume]; // 6
-}
-
--(void)processDataToJSON:(NSData *)responseData {
-    NSError *error = nil;
-    id json = [NSJSONSerialization JSONObjectWithData:responseData
-                                              options:0
-                                                error:&error];
-    if (error) { // 1
-        // Handle the error
-        NSLog(@"error: %@", error.localizedDescription);
-        return;
-    }
-    
-    if ([json isKindOfClass:[NSDictionary class]]) {
-        NSDictionary *jsonDict = (NSDictionary *)json;
-        
-        [[NSOperationQueue mainQueue] addOperationWithBlock:^{
-            [self processResponseDictionary:jsonDict];
-            [self.collectionView reloadData];
-        }];
-    }
 }
 
 - (void)processResponseDictionary:(NSDictionary *)responseDictionary {
@@ -114,6 +116,22 @@
     return cell;
     
 }
+
+
+
+//- (void)collectionView:(UICollectionView *)collectionView didHighlightItemAtIndexPath:(NSIndexPath *)indexPath
+//{
+//    CatImageCell *cell = [self.collectionView dequeueReusableCellWithReuseIdentifier:@"catImageCellId" forIndexPath:indexPath];
+//
+//    CatImage *catImage = [self.catImageArray objectAtIndex:indexPath.row];
+//    //[self performSegueWithIdentifier:@"safariButtonId" sender:catImage.url];
+//
+//}
+
+//-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+//    SafariViewController *sVC = [segue destinationViewController];
+//    sVC.url = sender;
+//}
 
 
 - (void)didReceiveMemoryWarning {
